@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block heading %} Create New Ad {% endblock %}
+{% block main %}	
+    <div class="row">
+		<div class="col-md-8 order-md-1">
+          <form class="needs-validation" novalidate="" method="post" action="{% url 'ad:create-ad' %}">
+          	 {% csrf_token %}
+            <div class="row">
+            	<div class="col-md-6 mb-3">      
+    				<label for="{{ form.category.id_for_label }}">Select Category</label>
+    				{{ form.category }}
+    				{{ form.category.errors }}
+    			</div>
+    			<div class="col-md-6 mb-3">
+    				<label for="{{ form.title.id_for_label }}">Title</label>
+    				{{ form.title }}
+    				{{ form.title.errors }}
+    			</div>
+
+    			<div class="col-md-12 mb-3">
+    				<label for="{{ form.description.id_for_label }}">Description</label>
+    				{{ form.description }}
+            		{{ form.description.errors }}
+    			</div>
+
+    			<div class="col-md-12 mb-3">
+    				<label for="{{ form.adress.id_for_label }}">Address</label>
+    				{{ form.address }}
+            		{{ form.address.errors }}
+    			</div>
+
+    			<div class="col-md-12 mb-3">
+    				<label for="{{ form.email.id_for_label }}">Email <span class="text-muted">(Optional)</span></label>
+    				{{ form.email }}
+            		{{ form.email.errors }}
+    			</div>	
+    			
+    			<div class="col-md-12 mb-3">
+    				<label for="{{ form.email.id_for_label }}">Phone </label>
+    				{{ form.phone }}
+            		{{ form.phone.errors }}
+    			</div>   
+                 <input type="hidden" name="author" value="{{ user.id }}" id="id_author">
+    			 <button class="btn btn-primary btn-lg btn-block" type="submit">Create Ad</button>      
+            </div>
+		  </form>
+		</div>
+	</div>
+{% endblock main%}

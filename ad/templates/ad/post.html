@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="border rounded flex-md-row mb-4 p-4">
+	{% include "includes/post-fields.html" with post=post%}
+</div>
+
+{% if other_posts %}
+<h4> More ads </h4>
+<div class="border rounded flex-md-row mb-4 p-4">
+		{% for post in other_posts %}
+			{% include "includes/post-fields.html" with post=post%}
+		{% endfor %}
+</div>
+{% endif %}
+{% endblock main %}

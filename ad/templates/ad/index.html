@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block main %}
+  <div>
+    {% if cat_posts %}
+            <div class="row g-0 border rounded  flex-md-row mb-4 mr-0 ml-0">
+            {% for category, posts in cat_posts.items %}
+                <div class="col-md-6">
+                    <div class="col p-4 d-flex flex-column position-static">
+                      <h4 class="category-header">{{ category.name }}</h4>
+                         <ul>
+                            {% for post in posts %}
+                                <li><a href="{% url 'ad:post' post.id %}">{{ post.title }}</a></li>
+                            {% endfor %}
+                         </ul>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                    </div>
+                  </div>
+            
+            {% endfor %}
+            </div>
+    {% else %} 
+        <p> No content available. </p>
+    {% endif %}
+    </div>
+{% endblock main %}
+
+
+

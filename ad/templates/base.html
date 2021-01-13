@@ -1,0 +1,59 @@
+{% load static %}
+</!DOCTYPE html>
+<html>
+<head>
+	<title> Yinaah - Habesha Classified ads </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'ad/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'ad/bootstrap-4.5.3-dist/css/bootstrap.min.css' %}">
+</head>
+<body>
+	<div class="container">
+		<header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4">
+            <a class="blog-header-logo text-dark" href="/ad/">Yinaah</a>
+          </div>
+          <div class="col-4 d-flex justify-content-end align-items-center">
+            <a class="text-muted" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
+            </a>
+            <a class="btn btn-sm btn-outline-secondary mr-4" href="/ad/createAd">Create new Ad</a>
+            {% if user.is_authenticated %}
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'ad:profile' user.id %}">Profile</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'ad:logout' %}">Log Out</a>
+            {% else %}
+               <a class="btn btn-sm btn-outline-secondary" href="{% url 'ad:login' %}">Login</a>
+            {% endif %}
+            
+          </div>
+        </div>
+      </header>
+
+      {% block sidebar %} 
+      <div class="nav-scroller py-1 mb-2">
+      <nav class="nav d-flex">
+          <a class="p-2 link-secondary" href="{% url 'ad:category' 1 %}">Babysitter |</a> 
+          <a class="p-2 link-secondary" href="{% url 'ad:category' 2 %}"> For Rent |</a> 
+          <a class="p-2 link-secondary" href="{% url 'ad:category' 4 %}"> For Sale |</a>
+          <a class="p-2 link-secondary" href="{% url 'ad:category' 6 %}"> Services</a>
+      </nav>
+     </div>
+     {% endblock %}
+
+     <h3>{% block heading %}{% endblock %}</h3>
+
+    {% if messages %}
+      {% include "includes/message.html" with messages=messages %}
+    {% endif %}
+
+    {% block main %}
+      main content
+    {% endblock %}
+
+  </div>
+
+  <script type="text/javascript" src="{% static 'ad/jquery/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'ad/bootstrap-4.5.3-dist/js/bootstrap.min.js' %}"></script>
+ </body>
+ </html>

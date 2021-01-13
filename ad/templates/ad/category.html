@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block main %}
+	{% if category %}
+		<div class="border rounded flex-md-row mb-4 p-4">
+			<h2>{{ category.name}}</h2>
+			<!-- add order by-->
+				{% for post in category.post_set.all %}
+				<div class="pb-4">
+					{% include "includes/post-fields.html" with post=post%}
+				</div>
+				{% endfor %}
+		</div>
+	{% else %}
+		<p> Category not found </p>
+	{% endif %}
+{% endblock main %}

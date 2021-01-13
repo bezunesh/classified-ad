@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="row">
+  		<div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Login</h4>
+  			{% if form.errors %}
+  			<p class="errorlist">Your username and password didn't match. Please try again.</p>
+  			{% endif %}
+
+  			{% if next %}
+  			    {% if user.is_authenticated %}
+  			    <p class="errorlist">Your account doesn't have access to this page. To proceed,
+  			    please login with an account that has access.</p>
+  			    {% else %}
+  			    <p>Please login to see this page.</p>
+  			    {% endif %}
+  			{% endif %}
+            <form class="needs-validation" novalidate="" method="post" action="{% url 'ad:login' %}">
+            	{% csrf_token %}
+            	<div class="row">
+              	<div class="col-md-6 mb-3">      
+      				<label for="{{ form.username.id_for_label }}">Username</label>
+      				{{ form.username }}
+      				{{ form.username.errors }}
+      			</div>
+      		</div>
+      		<div class="row">
+      			<div class="col-md-6 mb-3">
+      				<label for="{{ form.password.id_for_label }}">Password</label>
+      				{{ form.password }}
+      				{{ form.password.errors }}
+      			</div>
+      		</div>
+          <div>
+            <button class="btn btn-primary btn-md" type="submit">Login</button><br>
+            <a href="{% url 'ad:password_reset' %}"> Forgot password</a> 
+          </div>
+  			
+        <hr>
+        <div>
+        <a class="btn btn-primary btn-md" href="{% url 'ad:signup' %}">Create New Account</a> 
+        </div>
+        </form>
+        </div>
+    </div>
+
+{% endblock main %}
