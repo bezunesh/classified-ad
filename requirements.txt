@@ -1,0 +1,7 @@
+asgiref==3.3.1
+Django==3.1.4
+django-debug-toolbar==3.2
+django-polls==0.1
+python-dotenv==0.10.3
+pytz==2020.4
+sqlparse==0.4.1
