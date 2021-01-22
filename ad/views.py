@@ -10,30 +10,26 @@ from django.contrib.auth.models import User
 from .models import Category, Post
 from .forms import PostForm, SignupForm
 
+categories = Category.objects.all()
+
 def index(request):
-    categories = Category.objects.all()
     data = {}
     for category in categories:
         recent_posts = Post.objects.filter(category=category).order_by('-published_date')[:5]
         data[category] = recent_posts 
         
-    context = {'cat_posts' : data}    
+    context = {'cat_posts' : data, 'nav_categories': categories}    
     template = loader.get_template('ad/index.html')
     return HttpResponse(template.render(context, request))
 
-def categories(request):
-    categories = Category.objects.all()
-    out = ', '.join([c.name for c in categories])
-    return HttpResponse(out)
-
 def category(request, category_id):
 	category = Category.objects.get(pk=category_id)
-	return render(request, 'ad/category.html', { 'category' : category })
+	return render(request, 'ad/category.html', { 'category' : category, 'nav_categories': categories})
 
 def post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     other_posts = Post.objects.filter(category=post.category).exclude(pk=post_id).order_by('-published_date')
-    return render(request, 'ad/post.html', { 'post' : post, 'other_posts': other_posts})
+    return render(request, 'ad/post.html', { 'post' : post, 'other_posts': other_posts, 'nav_categories': categories})
 
 @login_required(redirect_field_name='next')
 def createAd(request):
@@ -49,12 +45,12 @@ def createAd(request):
             return HttpResponseRedirect(reverse('ad:post', args=(new_post.id,) ))
     else:
         form = PostForm()
-    return render(request, 'ad/new-post.html', {'form': form})    
+    return render(request, 'ad/new-post.html', {'form': form, 'nav_categories': categories})    
 
 
 def profile(request, user_id):
     posts = Post.objects.filter(author_id=user_id)
-    return render(request, 'ad/profile.html', {'posts': posts})
+    return render(request, 'ad/profile.html', {'posts': posts, 'nav_categories': categories})
 
 def signup(request):
     if request.method == 'POST':
@@ -71,8 +67,8 @@ def signup(request):
             return HttpResponseRedirect(reverse('ad:login'))
     else:
         form = SignupForm()
-    return render(request, 'registration/sign_up.html', {'form': form})    
+    return render(request, 'registration/sign_up.html', {'form': form, 'nav_categories': categories})    
 
 def userPosts(request, user_id):
     posts = Post.objects.filter(author_id=user_id)
-    return render(request, 'ad/profile.html', {'posts': posts})
+    return render(request, 'ad/profile.html', {'posts': posts, 'nav_categories': categories})
