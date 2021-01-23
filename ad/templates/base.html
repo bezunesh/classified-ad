@@ -35,7 +35,7 @@
         {% if nav_categories %}
       <nav class="nav d-flex">
           {% for category in nav_categories %}
-            <a class="p-2 link-secondary" href="{% url 'ad:category' category.id %}"> {{ category.title }} |</a> 
+            <a class="p-2 link-secondary" href="{% url 'ad:category' category.id %}"> {{ category.name }} |</a> 
           {% endfor %}
       </nav>
        {% endif %}
