@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 {% block main %}
   <div class="row">
-  		<div class="col-md-8 order-md-1">
-            <h4 class="mb-3">Login</h4>
+  		<div class="col-md-8 order-md-1 login">
+            <h4 class="mb-3 text-center">Login</h4>
   			{% if form.errors %}
-  			<p class="errorlist">Your username and password didn't match. Please try again.</p>
+  			<p class="errorlist ml-1">Your username and password didn't match. Please try again.</p>
   			{% endif %}
 
   			{% if next %}
   			    {% if user.is_authenticated %}
-  			    <p class="errorlist">Your account doesn't have access to this page. To proceed,
+  			    <p class="errorlist ml-1">Your account doesn't have access to this page. To proceed,
   			    please login with an account that has access.</p>
   			    {% else %}
-  			    <p>Please login to see this page.</p>
+  			    <p class="ml-1">Please login to see this page.</p>
   			    {% endif %}
   			{% endif %}
-            <form class="needs-validation" novalidate="" method="post" action="{% url 'ad:login' %}">
+            <form class="needs-validation input-form p-4" novalidate="" method="post" action="{% url 'ad:login' %}">
             	{% csrf_token %}
             	<div class="row">
               	<div class="col-md-6 mb-3">      
@@ -32,8 +32,8 @@
       			</div>
       		</div>
           <div>
-            <button class="btn btn-primary btn-md" type="submit">Login</button><br>
-            <a href="{% url 'ad:password_reset' %}"> Forgot password</a> 
+			<button class="btn btn-primary btn-md" type="submit">Login</button>
+            <div class="mt-2"><a href="{% url 'ad:password_reset' %}"> Forgot password</a> </div>
           </div>
   			
         <hr>

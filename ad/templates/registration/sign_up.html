@@ -2,8 +2,8 @@
 {% block main %}
     <div class="row">
         <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Create New Account</h4>
-          <form class="needs-validation" novalidate="" method="post" action="{% url 'ad:signup' %}">
+          <h4 class="p-2">Create New Account</h4>
+          <form class="needs-validation input-form p-4" novalidate="" method="post" action="{% url 'ad:signup' %}">
              {% csrf_token %}
              <div class="row">
                 <div class="col-md-6 mb-3">      

@@ -1,3 +1,6 @@
+body {
+  color: #808f9e;
+}
 .blog-header {
   line-height: 1;
   border-bottom: 1px solid #e5e5e5;
@@ -8,9 +11,6 @@
   color: #51b7de;
   text-decoration: none;
 }
-h4 {
-  color: #51b7de;
-}
 a:hover {
   text-decoration: none;
 }
@@ -20,6 +20,20 @@ a {
 .nav-link {
   color: #000000!
 }
+.input-form {
+  background-color: #f8f9fa;
+}
+.btn-primary, .btn-primary:hover {
+  color: #fff;
+  background-color: #51b7de;
+  border-color: #51b7de;
+}
+.login{
+  margin: auto;
+}
+
+
+
 .blog-header-logo {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
   font-size: 2.25rem;
@@ -31,6 +45,7 @@ a {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
+  color: #51b7de;
 }
 
 .display-4 {
