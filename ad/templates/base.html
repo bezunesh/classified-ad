@@ -4,38 +4,51 @@
 <head>
 	<title> Segon - Classified ads </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{% static 'ad/bootstrap-4.5.3-dist/css/bootstrap.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'ad/style.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'ad/bootstrap-4.5.3-dist/css/bootstrap.min.css' %}">
+  
 </head>
 <body>
 	<div class="container">
-		<header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-4">
-            <a class="blog-header-logo text-dark" href="/ad/">Segon</a>
-          </div>
-          <div class="col-4 d-flex justify-content-end align-items-center">
-            <a class="text-muted" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
-            </a>
-            <a class="btn btn-sm btn-outline-secondary mr-4" href="/ad/createAd">Create new Ad</a>
+		<header >
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-logo" href="/">Segon</a>
+        <button class="navbar-toggler collapsed" type="button" 
+          data-toggle="collapse" data-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" aria-expanded="false" 
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="navbar-collapse collapse justify-content-end" id="navbarSupportedContent" style="">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ad:create-ad' %}">{{ 'Create new Ad'|upper }}</a>
+            </li>
             {% if user.is_authenticated %}
-                <a class="btn btn-sm btn-outline-secondary" href="{% url 'ad:profile' user.id %}">Profile</a>
-                <a class="btn btn-sm btn-outline-secondary" href="{% url 'ad:logout' %}">Log Out</a>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'ad:profile' user.id %}">{{ 'Profile'|upper}}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'ad:logout' %}">{{ 'Log Out'|upper}}</a>
+              </li>
             {% else %}
-               <a class="btn btn-sm btn-outline-secondary" href="{% url 'ad:login' %}">Login</a>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'ad:login' %}">{{ 'Login'|upper}}</a>
+              </li>
             {% endif %}
-            
-          </div>
+            </li> 
+          </ul>
         </div>
-      </header>
+      </nav>
+    </header>
 
       {% block sidebar %} 
       <div class="nav-scroller py-1 mb-2">
         {% if nav_categories %}
       <nav class="nav d-flex">
           {% for category in nav_categories %}
-            <a class="p-2 link-secondary" href="{% url 'ad:category' category.id %}"> {{ category.name }} |</a> 
+            <a class="pt-3 link-secondary " href="{% url 'ad:category' category.id %}"> {{ category.name }} |&nbsp;&nbsp;</a> 
           {% endfor %}
       </nav>
        {% endif %}

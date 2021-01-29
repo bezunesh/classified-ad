@@ -5,11 +5,11 @@
             <div class="row g-0 border rounded  flex-md-row mb-4 mr-0 ml-0">
             {% for category, posts in cat_posts.items %}
                 <div class="col-md-6">
-                    <div class="col p-4 d-flex flex-column position-static">
-                      <h4 class="category-header">{{ category.name }}</h4>
+                    <div class="col pt-4 pl-0 pr-0  d-flex flex-column position-static">
+                      <h4 class="category-header bg-light">{{ category.name }}</h4>
                          <ul>
                             {% for post in posts %}
-                                <li><a href="{% url 'ad:post' post.id %}">{{ post.title }}</a></li>
+                                <li><a  class="post-link" href="{% url 'ad:post' post.id %}">{{ post.title }}</a></li>
                             {% endfor %}
                          </ul>
                     </div>
