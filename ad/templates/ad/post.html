@@ -8,7 +8,9 @@
 <h4> More ads </h4>
 <div class="border rounded flex-md-row mb-4 p-4">
 		{% for post in other_posts %}
+		<div class="pb-4">
 			{% include "includes/post-fields.html" with post=post%}
+		</div>
 		{% endfor %}
 </div>
 {% endif %}
