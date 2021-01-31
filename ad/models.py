@@ -9,9 +9,9 @@ class Category(models.Model):
 		return self.name
 
 class Post(models.Model):
-	title = models.CharField(max_length=50)
-	address = models.CharField(max_length=200)
-	description = models.TextField(max_length=200)
+	title = models.CharField(max_length=255)
+	address = models.CharField(max_length=255)
+	description = models.TextField(max_length=800)
 	email = models.EmailField(max_length=20, blank=True, null=True)
 	phone = models.CharField(max_length=50)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)

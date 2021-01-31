@@ -1,4 +1,4 @@
 <h4>{{ post.title }} </h4>
 <p>{{ post.description }} </p>
-<p>{{ post.email }}</p>
-<p>{{ post.phone }}</p>
+<p>{% if post.email%} Email: {{ post.email }} {% endif %}</p>
+<p>Phone: {{ post.phone }}</p>
