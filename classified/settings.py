@@ -21,11 +21,14 @@ with open('/etc/config.json') as config_file:
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['SECRET_KEY']
+CSRF_COOKIE_SECURE = config["CSRF_COOKIE_SECURE"]
+SESSION_COOKIE_SECURE = config["SESSION_COOKIE_SECURE"] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config["DEBUG"]
 
-ALLOWED_HOSTS = ['127.0.0.1', '34.201.55.227']
+
+ALLOWED_HOSTS = ['127.0.0.1', 'ad.bezunesh.com']
 
 
 # Application definition
