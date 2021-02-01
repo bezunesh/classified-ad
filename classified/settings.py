@@ -25,7 +25,7 @@ CSRF_COOKIE_SECURE = config["CSRF_COOKIE_SECURE"]
 SESSION_COOKIE_SECURE = config["SESSION_COOKIE_SECURE"] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config["DEBUG"]
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['127.0.0.1', 'ad.bezunesh.com']
