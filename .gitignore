@@ -3,3 +3,4 @@ db.sqlite3
 ad/__pycache__
 static/
 media/
+classified/.env
