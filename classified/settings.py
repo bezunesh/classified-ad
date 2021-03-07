@@ -9,12 +9,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import json
-import environ
+#import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env()
-environ.Env.read_env()  # reading .env file
+#env = environ.Env()
+#environ.Env.read_env()  # reading .env file
 
 #with open('/etc/config.json') as config_file:
  #   config = json.load(config_file)
@@ -23,7 +24,7 @@ environ.Env.read_env()  # reading .env file
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 #SESSION_COOKIE_SECURE = config["SESSION_COOKIE_SECURE"] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
