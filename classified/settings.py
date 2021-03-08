@@ -11,6 +11,7 @@ from pathlib import Path
 import json
 #import environ
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -144,3 +145,4 @@ MEDIA_URL = '/media/'
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+django_heroku.settings(locals())
