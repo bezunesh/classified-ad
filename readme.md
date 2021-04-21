@@ -139,8 +139,10 @@ Prerequisites
     kubectl get pods
 
 ### Database Migration and Admin User
-    # using cloud-shell connect to one of the pods's classifiedad-app container
-    # example pod id: classifiedad-7b84cddb6b-j5fxj
+    # using **cloud-shell** connect to one of the pods's classifiedad-app container
+    # example:- cluster: cluster-staging,  pod id: classifiedad-7b84cddb6b-j5fxj
+    
+    gcloud container clusters get-credentials cluster-staging --zone us-east4-a --project django-classified-ad 
     kubectl exec --stdin --tty classifiedad-7b84cddb6b-j5fxj -c classifiedad-app -- /bin/bash 
 
     # migrate db
@@ -162,4 +164,4 @@ Prerequisites
     classifiedad   LoadBalancer   10.59.249.176   34.86.75.60 
 
     # go to the external-ip in your browser to see it running
-    # append /admin to the external-ip - to see the backend 
+    # append /admin to the external-ip - to see the backend, and use the admin user credentials created above to login into the backend of the application.
