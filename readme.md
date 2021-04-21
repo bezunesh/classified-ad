@@ -4,7 +4,7 @@ This is a classified advertisement web application developed using django framew
 - Deploying and Running a django app on Google Kubernetes Engine (GKE)
 - CI/CD piepline using CircleCI
 
-**Architecture Diagram**  
+### Architecture Diagram
 
 The diagram below illustrates the infrasturcure, components invoved, and the whole workflow including the CI/CD pipeline.
 
@@ -139,7 +139,7 @@ Prerequisites
     kubectl get pods
 
 ### Database Migration and Admin User
-    # using **cloud-shell** connect to one of the pods's classifiedad-app container
+    # using cloud-shell connect to one of the pods's classifiedad-app container
     # example:- cluster: cluster-staging,  pod id: classifiedad-7b84cddb6b-j5fxj
     
     gcloud container clusters get-credentials cluster-staging --zone us-east4-a --project django-classified-ad 
@@ -157,7 +157,7 @@ Prerequisites
     # follow the on-screen instruction to complete the user creation
 
 ### Check the running app
-    # take a note of the external-ip
+    # get the running service, and take a note of the external-ip
     kubectl get services classifiedad
 
     NAME           TYPE           CLUSTER-IP      EXTERNAL-IP 
