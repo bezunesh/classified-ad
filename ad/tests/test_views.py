@@ -69,16 +69,16 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('ad:category', args=[category1.id ]))
         self.assertEqual(response.context['category'], category1)
 
-    def test_post(self):
-        '''
+    '''def test_post(self):
+        
         post view feches a post by id and assigns it to the context variable
-        '''
+       
         post = Post.objects.get(pk=1)
         response = self.client.get(reverse('ad:post', args=[post.id]))
         self.assertEqual(response.context['post'], post)
         self.assertNotIn(post, response.context['other_posts'])
         self.assertQuerysetEqual(response.context['other_posts'], [])
-
+    '''
     def test_profile(self):
         '''
         profile view lists posts of the current user
