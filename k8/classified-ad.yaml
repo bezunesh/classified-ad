@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classifiedad
+  labels:
+    app: classifiedad
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: classifiedad
+  template:
+    metadata:
+      labels:
+        app: classifiedad
+    spec:
+      containers:
+      - name: classifiedad-app
+        image: gcr.io/django-classified-ad/classified-ad
+        imagePullPolicy: Always
+        env:
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql
+                  key: username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql
+                  key: password
+        ports:
+        - containerPort: 8080
+
+      # [proxy_container]
+      - image: gcr.io/cloudsql-docker/gce-proxy:1.16
+        name: cloudsql-proxy
+        command: ["/cloud_sql_proxy", "--dir=/cloudsql",
+                  "-instances=$(connection-name)=tcp:5432", 
+                  "-credential_file=/secrets/cloudsql/credential.json"]
+        envFrom:
+        - configMapRef:
+            name: sql-instance-config
+        volumeMounts:
+          - name: cloudsql-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+          - name: ssl-certs
+            mountPath: /etc/ssl/certs
+          - name: cloudsql
+            mountPath: /cloudsql
+      # [volumes]
+      volumes:
+        - name: cloudsql-credentials
+          secret:
+            secretName: cloudsql-credentials
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs
+        - name: cloudsql
+          emptyDir: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: classifiedad
+  labels:
+    app: classifiedad
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: classifiedad

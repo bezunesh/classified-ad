@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sql-instance-config
+  namespace: default
+data:
+  connection-name: django-classified-ad:us-east4:postgres-instance-production

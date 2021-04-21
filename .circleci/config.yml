@@ -1,0 +1,75 @@
+version: 2.1
+orbs:
+  gcp-gcr: circleci/gcp-gcr@0.13.0
+  gcp-cli: circleci/gcp-cli@1.0.0
+  gke: circleci/gcp-gke@1.2.0
+jobs:
+  build_and_push_docker_image:
+    executor: gcp-gcr/default
+    steps:
+      - checkout
+      - gcp-gcr/gcr-auth
+      - gcp-gcr/build-image:
+          image: classified-ad
+          no_output_timeout: 20m
+          registry-url: gcr.io
+      - gcp-gcr/push-image:
+          digest-path: /tmp/digest.txt
+          image: classified-ad
+          registry-url: gcr.io
+  deploy:    
+    parameters:
+      cluster-name:
+        default: "cluster-staging"
+        type: string    
+    executor: gke/default
+    steps:
+      - checkout
+      - gke/install
+      - gcp-gcr/gcr-auth
+      - gke/rollout-image:
+          cluster: << parameters.cluster-name >>
+          container: classifiedad-app
+          deployment: classifiedad
+          image: gcr.io/django-classified-ad/classified-ad
+      - run:
+          name: "run migrations, collect static files and run tests"
+          command : |
+              gcloud container clusters get-credentials << parameters.cluster-name >>
+              kubectl exec $(kubectl get pods | awk '{print $1}' | sed -n 2p)  -- bash -c "python3 -m venv venv && \
+              source venv/bin/activate && \
+              pip install -r requirements.txt && \
+              python manage.py migrate && \
+              python manage.py collectstatic --noinput && \
+              python manage.py test "
+              
+      - run:
+         name: "copy static files to cloud storage"
+         command: |
+            gsutil -m rsync -r ./static gs://django-classified-ad/static
+      - run:
+          command : |
+            kubectl rollout restart deployment classifiedad
+  
+workflows:
+    build_test_deploy:
+      jobs:
+        - build_and_push_docker_image
+        - deploy:
+            name: "deploy staging"
+            requires:
+              - build_and_push_docker_image
+            cluster-name: "cluster-staging"
+            filters:
+              branches:
+                only:
+                  develop
+        - deploy:
+            name: "deploy production"
+            requires:
+              - build_and_push_docker_image
+            cluster-name: "cluster-production"
+            filters:
+              branches:
+                only:
+                  master

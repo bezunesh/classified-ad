@@ -11,21 +11,12 @@ from pathlib import Path
 import json
 #import environ
 import os
-import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-#env = environ.Env()
-#environ.Env.read_env()  # reading .env file
-
-#with open('/etc/config.json') as config_file:
- #   config = json.load(config_file)
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'pf-@jxtojga)z+4s*uwbgjrq$aep62-thd0q7f&o77xtpka!_m'
 #SESSION_COOKIE_SECURE = config["SESSION_COOKIE_SECURE"] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -86,11 +77,11 @@ WSGI_APPLICATION = 'classified.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'classifiedad',
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        #'PORT': os.getenv('DB_PORT'),
+        'NAME': 'classified-ad',
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -135,7 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_ROOT = BASE_DIR / 'static'
-STATIC_URL = '/static/'
+STATIC_URL = 'http://storage.googleapis.com/django-classified-ad/static/'
+
 
 LOGIN_REDIRECT_URL = '/ad/'
 LOGIN_URL = '/ad/accounts/login/'
@@ -145,4 +137,3 @@ MEDIA_URL = '/media/'
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
-django_heroku.settings(locals())

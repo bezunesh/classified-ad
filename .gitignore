@@ -4,3 +4,4 @@ ad/__pycache__
 static/
 media/
 classified/.env
+*.json
