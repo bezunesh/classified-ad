@@ -42,10 +42,6 @@ jobs:
               python manage.py migrate && \
               python manage.py collectstatic --noinput "
       - run:
-         name: "copy static files to cloud storage"
-         command: |
-            gsutil -m rsync -r ./static/ gs://django-classified-ad/static
-      - run:
           command : |
             kubectl rollout restart deployment classifiedad
   
