@@ -28,12 +28,12 @@ The diagram below illustrates the infrasturcure, components invoved, and the who
 > Staging Frontend: Go to http://35.245.176.7  
 > Staging Backend: Go to http://35.245.176.7/admin  
 >
-> Production Frontend: Go to http://35.245.176.7  
-> Production Backend: Go to http://35.245.176.7/admin
+> Production Frontend: Go to http://34.86.75.60/  
+> Production Backend: Go to http://34.86.75.60/admin
 
 ### Run the app locally
 
-#### Prerquisites
+#### Prerequisites
 
 - Python3 installed
 - PostgreSQL installed
@@ -66,9 +66,10 @@ The diagram below illustrates the infrasturcure, components invoved, and the who
     # check the running app:
     http://127.0.0.1:8080
 
-    # create backend/admin user
+    # create backend/admin user and 
     python manage.py createsuperuser
-    # follow the screen instruction
+    .. and follow the screen instruction
+
     # access the backend on
     http://127.0.0.1:8080/admin
 
@@ -76,7 +77,7 @@ The diagram below illustrates the infrasturcure, components invoved, and the who
 
 Prerequisites
 
-- create the infrasturcture using the terraform code found on repo : https://github.com/bezunesh/iac-classified-ad.git
+- create the infrasturcture using the terraform code found on repo **(it is part of the final project as well)**: https://github.com/bezunesh/iac-classified-ad.git
 - a GCP project, name : django-classified-ad
 - a service account key file with role Cloud SQL admin
 - enable GCP APIS: Google Compute Engne, Kubernetes Engine, Cloud SQL Admin
@@ -96,8 +97,8 @@ Prerequisites
     gcloud config set compute/region us-east4
     gcloud config set compute/zone us-east4-a
 
-    # build and push docker image
-    docker build -t gcr.io/django-classified-ad/classified-ad
+    # build and push the docker image
+    docker build -t gcr.io/django-classified-ad/classified-ad .
     docker push gcr.io/django-classified-ad/classified-ad
 
     # create a cloud storage bucket and set a public access
@@ -107,6 +108,8 @@ Prerequisites
     # copy the static files 
     # make sure you have run the 'collectstatic' command locally as mentioned in the section - run the app locally 
     gsutil -m rsync -r ./static gs://django-classified-ad/static 
+
+### Deployment
 
     # to deploy to staging
     cd environment/staging  
@@ -135,13 +138,12 @@ Prerequisites
     # make sure the pods are running
     kubectl get pods
 
-    # database migration and admin user
+### Database Migration and Admin User
     # using cloud-shell connect to one of the pods's classifiedad-app container
-    # example pid id: classifiedad-7b84cddb6b-j5fxj
+    # example pod id: classifiedad-7b84cddb6b-j5fxj
     kubectl exec --stdin --tty classifiedad-7b84cddb6b-j5fxj -c classifiedad-app -- /bin/bash 
 
-    # now that we are inside the container
-    # do db migration
+    # migrate db
     python3 -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
@@ -152,7 +154,8 @@ Prerequisites
 
     # follow the on-screen instruction to complete the user creation
 
-    # see the running app, and take a note of the external-ip
+### Check the running app
+    # take a note of the external-ip
     kubectl get services classifiedad
 
     NAME           TYPE           CLUSTER-IP      EXTERNAL-IP 
