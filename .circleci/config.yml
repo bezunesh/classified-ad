@@ -40,12 +40,12 @@ jobs:
               source venv/bin/activate && \
               pip install -r requirements.txt && \
               python manage.py migrate && \
-              python manage.py collectstatic --noinput "
-              
+              python manage.py collectstatic --noinput && \
+              python manage.py test --noinput "
       - run:
          name: "copy static files to cloud storage"
          command: |
-            gsutil -m rsync -r ./static gs://django-classified-ad/static
+            gsutil -m rsync -r ./static/ gs://django-classified-ad/static
       - run:
           command : |
             kubectl rollout restart deployment classifiedad
