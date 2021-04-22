@@ -43,10 +43,6 @@ jobs:
               python manage.py test && \
               python manage.py collectstatic --noinput "
       - run:
-         name: "copy static files to cloud storage"
-         command: |
-            gsutil -m rsync -r ./static gs://polls-static-files/static
-      - run:
           command : |
             kubectl rollout restart deployment classifiedad
   
