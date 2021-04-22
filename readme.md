@@ -171,10 +171,12 @@ Prerequisites
 
 The .circleci contains the pipeline configuration file. I have made use of different CircleCI orbs to achive each jobs as orbs facilitate reusablity.
 
+To view the classified-ad project on CircleCI: https://app.circleci.com/pipelines/github/bezunesh/classified-ad?invite=true 
+
 ### jobs
 
 - build_and_push_docker_image :   builds the application's docker image and pushes it to GCP Container Registry.
-- deploy : a parameterised job that carries out deployment based on ean nvironment parameter. It  also does database migration and unit tests.
+- deploy : a parameterised job that carries out deployment based on a parameter. It  also does database migration and unit tests.
 
 ### workflow
 The workflow uses the above jobs, sets relevant parameters based on the git branch and selectilvely runs the deployment job.
