@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar'
+    'debug_toolbar',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR , 'static')
-STATIC_URL = 'http://storage.googleapis.com/django-classified-ad/static/'
+STATIC_URL = '/static/' #'http://storage.googleapis.com/django-classified-ad/static/'
 
 
 LOGIN_REDIRECT_URL = '/ad/'
@@ -137,3 +138,14 @@ MEDIA_URL = '/media/'
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+    
+}
