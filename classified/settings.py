@@ -128,7 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR , 'static')
-STATIC_URL = 'http://storage.googleapis.com/django-classified-ad/static/'
+STATIC_URL = '/static/' #http://storage.googleapis.com/django-classified-ad/static/'
 
 
 LOGIN_REDIRECT_URL = '/ad/'

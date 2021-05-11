@@ -1,48 +1,49 @@
-from django.http import HttpResponse, JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
 from ad.models import Post
 from ad_rest_api.serializers import AdSerializer
 
 @csrf_exempt
-def post_list(request):
+@api_view(['GET', 'POST'])
+def post_list(request, format=None):
     '''
     List all ad posts, or create a new post.
     '''
     if request.method == 'GET':
         posts = Post.objects.all()
         serializer = AdSerializer(posts, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data)
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = AdSerializer(data=data)
+        serializer = AdSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @csrf_exempt
-def post_detail(request, pk):
+@api_view(['GET', 'PUT', 'DELETE'])
+def post_detail(request, pk, format=None):
     '''
     retrive, update or delete a post
     '''
     try:
         post = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
-        return HttpResponse(status=400)
+        return Response(status=status.HTTP_400_NOT_FOUND)
     
     if request.method == 'GET':
         serializer = AdSerializer(post)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
     
     elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = AdSerializer(post, data=data)
+        serializer = AdSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
         post.delete()
-        return HttpResponse(status=204)
+        return Response(status=status.HTTP_204_NO_CONTENT)
