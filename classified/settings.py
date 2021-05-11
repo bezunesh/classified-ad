@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar'
+    'debug_toolbar',
+    'rest_framework',
+    'ad_rest_api.apps.AdRestApiConfig',
 ]
 
 MIDDLEWARE = [
