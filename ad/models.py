@@ -14,9 +14,9 @@ class Post(models.Model):
 	description = models.TextField(max_length=800)
 	email = models.EmailField(max_length=20, blank=True, null=True)
 	phone = models.CharField(max_length=50)
-	category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	category = models.ForeignKey(Category, related_name="posts", on_delete=models.CASCADE)
 	published_date = models.DateField()
-	author = models.ForeignKey(User, on_delete=models.CASCADE)
+	author = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.title
