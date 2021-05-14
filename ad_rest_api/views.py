@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from ad.models import Post, Category
 from ad_rest_api.serializers import AdSerializer, UserSerializer, CategorySerializer
-
+from ad_rest_api.permissions import IsOwnerOrReadOnly
 
 class PostList(generics.ListCreateAPIView):
     '''
@@ -21,7 +21,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     '''
     retrive, update or delete a post
     '''
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     queryset = Post.objects.all()
     serializer_class = AdSerializer
