@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
-from rest_framework import generics
-from rest_framework import permissions
+from rest_framework import generics, permissions, renderers
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from ad.models import Post, Category
 from ad_rest_api.serializers import AdSerializer, UserSerializer, CategorySerializer
 from ad_rest_api.permissions import IsOwnerOrReadOnly
@@ -45,3 +47,18 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class PostDescription(generics.GenericAPIView):
+    queryset = Post.objects.all()
+    renderer_classes = [renderers.StaticHTMLRenderer]
+
+    def get(self, request, *args, **kward):
+        post = self.get_object()
+        return Response(post.description)
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'posts': reverse('post-list', request=request, format=format)
+    })
