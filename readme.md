@@ -23,14 +23,6 @@ The diagram below illustrates the infrasturcure, components invoved, and the who
   
 ## How Tos
 
-### Check the live application
-
-> Staging Frontend: Go to http://35.245.176.7  
-> Staging Backend: Go to http://35.245.176.7/admin  
->
-> Production Frontend: Go to http://34.86.75.60/  
-> Production Backend: Go to http://34.86.75.60/admin
-
 ### Run the app locally
 
 #### Prerequisites
